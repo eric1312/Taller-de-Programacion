@@ -297,3 +297,34 @@ begin
     end;
 end;
 ```
+
+agregarAdelante
+======================
+```Pas		
+procedure agregar(var a: arbol; RC: Rconsulta; var v: Vcod);
+		begin
+			if (a = nil) then begin
+				new(a);
+				a^.mat := RC.mat;
+				a^.L := nil;
+				agregarAdelante(a^.L, RC);
+				writeln('agrego nodo');
+				inicializarV(a^.v);
+				a^.v[RC.otros.cod].cant := a^.v[RC.otros.cod].cant +1;
+				writeln('sumo al vector');
+				a^.HI := nil;
+				a^.HD := nil;
+			end
+			else begin
+				if (RC.mat = a^.mat) then begin
+					agregarAdelante(a^.L, RC);
+					writeln('agrego nodo');
+					a^.v[RC.otros.cod].cant := a^.v[RC.otros.cod].cant +1;
+					writeln('sumo al vector');
+				end
+				else begin
+					if (RC.mat < a^.mat) then agregar(a^.HI, RC, v)
+					else agregar(a^.HD, RC, v);
+				end;
+			end;
+		end;
